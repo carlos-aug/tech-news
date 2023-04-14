@@ -22,14 +22,14 @@ def fetch(url):
 # Requisito 2
 def scrape_updates(html_content):
     selector = Selector(text=html_content)
-    links = selector.css("header h2 > a::attr(href)").get()
+    links = selector.css("header h2 > a::attr(href)").getall()
     return links
 
 
 # Requisito 3
 def scrape_next_page_link(html_content):
     selector = Selector(text=html_content)
-    next_page = selector.css("a.next ::attr(href)").get()
+    next_page = selector.css("a.next::attr(href)").get()
     return next_page
 
 
