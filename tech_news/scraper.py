@@ -35,7 +35,32 @@ def scrape_next_page_link(html_content):
 
 # Requisito 4
 def scrape_news(html_content):
-    """Seu código deve vir aqui"""
+
+    selector = Selector(text=html_content, type="html")
+    url_link = selector.css('link[rel="canonical"]::attr(href)').get()
+    title = selector.css(".entry-title::text").get().strip()
+    timestamp = selector.css(".meta-date::text").get()
+    writer = selector.css(".fn > a::text").get().strip()
+    reading_time = int(
+        selector.css("li.meta-reading-time::text").get().split()[0]
+    )
+    summary = selector.css(
+        "div.entry-content:first-of-type > p:nth-of-type(1) ::text"
+    ).getall()
+    summary = "".join(summary).strip()
+
+    category = selector.css(".label::text").get().strip()
+    new_dict = {
+        "url": url_link,
+        "title": title,
+        "timestamp": timestamp,
+        "writer": writer,
+        "reading_time": reading_time,
+        "summary": summary,
+        "category": category,
+    }
+
+    return new_dict
 
 
 # Requisito 5
@@ -44,5 +69,7 @@ def get_tech_news(amount):
 
 
 if __name__ == "__main__":
-    url = "https://blog.betrybe.com/"
-    print(scrape_next_page_link(fetch(url)))
+    url = (
+        "https://blog.betrybe.com/desenvolvimento-web/estruturas-de-repeticao/"
+    )
+    print(scrape_news(fetch(url)))
