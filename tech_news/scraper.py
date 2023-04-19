@@ -83,7 +83,7 @@ def get_tech_news(amount):
     return result_scrape
 
 
-# if __name__ == "__main__":
-#     url = "https://blog.betrybe.com"
-#     page_content = fetch(url)
-#     print(get_tech_news(5))
+if __name__ == "__main__":
+    url = "https://blog.betrybe.com"
+    page_content = fetch(url)
+    print(get_tech_news(5))
